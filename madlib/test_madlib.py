@@ -1,7 +1,9 @@
 """
 Testing for madlibs
 """
-from .madlib import read_madlib_file, process_madlibs_template
+
+
+from .madlib import read_madlib_file
 import pytest
 
 
