@@ -42,15 +42,3 @@ def test_madlib_read_exception():
     expected_output = 'File was not found!'
 
     assert read_madlib_file(actual_filename)[1] == expected_output
-
-
-
-# test process_madlibs_template
-
-
-# test for output string type
-# test expected madlibs output vs actual (in true case)
-# test that output doesn't match input (in true case)
-
-
-#
