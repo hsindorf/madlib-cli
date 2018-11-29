@@ -40,9 +40,9 @@ def write_file(content, filename):
     try:
         with open('./' + filename + '.txt', 'w') as f:
             f.write(content)
-            return ('success')
+            return ('Successfully saved!')
     except IOError:
-        return('fail')
+        return('Failed!')
 
 
 if __name__ == "__main__":
