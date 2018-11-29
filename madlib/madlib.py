@@ -1,7 +1,7 @@
 """Madlibs! Open in the command line to play"""
 
 
-from file_io import read_file, write_file
+from .file_io import read_file, write_file
 from textwrap import dedent
 import re
 import sys
@@ -35,7 +35,7 @@ def greet_user_prompt():
     '''))
 
 
-def read_madlib_file():
+def read_madlib_file(filename=None):
     """
     This takes the user's input, asks file_io to read the file,
     returns a list with the success/fail status of read, and content (or error
@@ -45,7 +45,8 @@ def read_madlib_file():
     output: list, bool fail/pass + madlibs template/error message
     """
 
-    filename = input('Your madlibs file (no extension): ')
+    if not filename:
+        filename = input('Your madlibs file (no extension): ')
 
     if filename.lower() == 'exit':
         exit()
@@ -66,7 +67,9 @@ def read_madlib_file():
 
 def process_madlibs_template(madlibs_template):
     """
-    This takes in a madlibs template as a string
+    This takes in a madlibs template as a string, uses regex to gather all of
+    the template words into a list and strip the {}, and also replace all the
+    template words with {} so they can be filled with string format
 
     input: list:
         bool, fail/pass of read
@@ -84,11 +87,9 @@ def process_madlibs_template(madlibs_template):
 
         user_words = prompt_for_words(words)
 
-        print(len(tuple(user_words)))
         madlibs_template[1] = madlibs_template[1].format(*tuple(user_words))
 
         return madlibs_template
-        # return filled string
 
 
 def prompt_for_words(words):
