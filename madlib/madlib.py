@@ -1,7 +1,7 @@
 """Madlibs! Open in the command line to play"""
 
 
-from .file_io import read_file, write_file
+from file_io import read_file, write_file
 from textwrap import dedent
 import re
 import sys
@@ -35,7 +35,17 @@ def greet_user_prompt():
     '''))
 
 
-def read_madlib_file(filename=None):
+def prompt_user_filename():
+    """
+    Prompts the user for a filename
+
+    no input, output: string
+    """
+
+    return input('Your madlibs file (no extension): ')
+
+
+def read_madlib_file(filename):
     """
     This takes the user's input, asks file_io to read the file,
     returns a list with the success/fail status of read, and content (or error
@@ -44,9 +54,6 @@ def read_madlib_file(filename=None):
     No input
     output: list, bool fail/pass + madlibs template/error message
     """
-
-    if not filename:
-        filename = input('Your madlibs file (no extension): ')
 
     if filename.lower() == 'exit':
         exit()
@@ -76,9 +83,12 @@ def process_madlibs_template(madlibs_template):
         string, madlibs template
     output: string, filled madlibs template
     """
+
     if madlibs_template[0] is False:
         print(madlibs_template[1])
+        return madlibs_template
     else:
+        print('in the else!!!!')
         words = re.findall(r'\{.*?\}', madlibs_template[1])
         madlibs_template[1] = re.sub(r'\{.*?\}', '{}', madlibs_template[1])
 
@@ -87,7 +97,7 @@ def process_madlibs_template(madlibs_template):
 
         user_words = prompt_for_words(words)
 
-        madlibs_template[1] = madlibs_template[1].format(*tuple(user_words))
+        madlibs_template[1] = madlibs_template[1].format(*user_words)
 
         return madlibs_template
 
@@ -156,12 +166,15 @@ def run():
     """
     greet_user_prompt()
     while True:
-        unformatted_madlibs = read_madlib_file()
+        unformatted_madlibs = read_madlib_file(prompt_user_filename())
         filled_madlibs = process_madlibs_template(unformatted_madlibs)
-        output_to_user(filled_madlibs)
+        if filled_madlibs[0] is True:
+            output_to_user(filled_madlibs)
 
-        user_input = input('Would you like to do another? y/n ')
-        if user_input.lower() == 'y':
+            user_input = input('Would you like to do another? y/n ')
+            if user_input.lower() == 'y':
+                continue
+        else:
             continue
 
         exit()
