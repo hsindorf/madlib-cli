@@ -106,7 +106,7 @@ def prompt_for_words(words):
 
     for i in range(len(words)):
         user_input = input(words[i] + ': ')
-        if user_input == 'exit':
+        if user_input == 'quit':
             exit()
 
         words_out.append(user_input)
