@@ -1,6 +1,5 @@
 """Madlibs! Open in the command line to play"""
 
-
 from file_io import read_file, write_file
 from textwrap import dedent
 import re
@@ -88,7 +87,6 @@ def process_madlibs_template(madlibs_template):
         print(madlibs_template[1])
         return madlibs_template
     else:
-        print('in the else!!!!')
         words = re.findall(r'\{.*?\}', madlibs_template[1])
         madlibs_template[1] = re.sub(r'\{.*?\}', '{}', madlibs_template[1])
 
